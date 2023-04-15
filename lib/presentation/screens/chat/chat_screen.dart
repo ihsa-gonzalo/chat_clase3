@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/entities/message.dart';
 import 'package:yes_no_app/presentation/widgets/chat/her_message_bubble.dart';
 import 'package:yes_no_app/presentation/widgets/chat/my_message_bubble.dart';
 import 'package:yes_no_app/presentation/widgets/shared/message_field_box.dart';
@@ -36,16 +39,25 @@ class _ChatView extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child:
-               ListView.builder(
+              child: ListView.builder(
                 itemCount: 100,
                 itemBuilder: (context, index) {
-                  return (index % 2 == 0)
-                      ? const HerMessageBubble()
-                      : const MyMessageBubble();
+                  List names = ['palabra 1', 'palabra 2', 'palabra 3','palabra 4'];
+                  final _random = new Random();
+                  var element = names[_random.nextInt(names.length)];
+
+                  if (index % 2 == 0) {
+                    Message message =
+                        Message(text: element, fromWho: FromWho.hers);
+                    return HerMessageBubble(message);
+                  } else {
+                    Message message =
+                        Message(text: element, fromWho: FromWho.me);
+                    return MyMessageBubble(message);
+                  }
                 },
               ),
-             ),
+            ),
 
             /// Caja de texto de mensajes
             const MessageFieldBox(),
